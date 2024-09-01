@@ -16,7 +16,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <title>Snippet</title>
+      <body className={inter.className}>
+        {/* navbar */}
+        <nav className="bg-slate-700 text-white p-4">
+          <div className="container mx-auto flex justify-between items-center">
+            <a href="/" className="text-2xl font-bold">
+              Home
+            </a>
+            <a href="/snippets/new" className="text-blue-500 font-medium">
+              Create Snippet
+            </a>
+          </div>
+        </nav>
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auto Clearance System Dashboard</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="bg-gray-900 text-gray-300 font-sans">
+    <!-- Sidebar -->
+    <div class="flex min-h-screen">
+      <aside class="w-64 bg-gray-800 shadow-lg">
+        <div class="p-6">
+          <div class="text-2xl font-bold text-gray-200 mb-8">
+            <span class="block text-center">Auto Clearance</span>
+            <span class="block text-center">System</span>
+          </div>
+          <ul class="space-y-4">
+            <li>
+              <a
+                href="#"
+                class="flex items-center px-4 py-2 space-x-3 text-gray-400 hover:bg-gray-700 hover:text-gray-200 rounded-md"
+              >
+                <span class="material-icons">dashboard</span>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="flex items-center px-4 py-2 space-x-3 text-gray-400 hover:bg-gray-700 hover:text-gray-200 rounded-md"
+              >
+                <span class="material-icons">check_circle</span>
+                <span>Clearance Requests</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="flex items-center px-4 py-2 space-x-3 text-gray-400 hover:bg-gray-700 hover:text-gray-200 rounded-md"
+              >
+                <span class="material-icons">people</span>
+                <span>Student Database</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="flex items-center px-4 py-2 space-x-3 text-gray-400 hover:bg-gray-700 hover:text-gray-200 rounded-md"
+              >
+                <span class="material-icons">admin_panel_settings</span>
+                <span>Staff Management</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="flex items-center px-4 py-2 space-x-3 text-gray-400 hover:bg-gray-700 hover:text-gray-200 rounded-md"
+              >
+                <span class="material-icons">bar_chart</span>
+                <span>Reports</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="flex items-center px-4 py-2 space-x-3 text-gray-400 hover:bg-gray-700 hover:text-gray-200 rounded-md"
+              >
+                <span class="material-icons">settings</span>
+                <span>Settings</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-6 bg-gray-900">
+        <!-- Dashboard Header -->
+        <div class="flex justify-between items-center mb-6">
+          <h1 class="text-3xl font-semibold text-gray-200">Dashboard</h1>
+          <div class="flex items-center space-x-4">
+            <div class="relative">
+              <button
+                class="relative z-10 block rounded-full overflow-hidden border-2 border-gray-400 focus:outline-none focus:border-gray-600"
+              >
+                <img
+                  class="h-8 w-8 rounded-full"
+                  src="https://via.placeholder.com/150"
+                  alt="Profile picture"
+                />
+              </button>
+              <div
+                class="absolute inset-0 w-full h-full rounded-full shadow-inner"
+                aria-hidden="true"
+              ></div>
+            </div>
+            <div>
+              <p class="text-gray-200">Welcome, John Doe</p>
+              <p class="text-gray-400 text-sm">Student</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clearance Status -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          <div class="bg-gray-800 p-4 rounded-lg shadow">
+            <h2 class="text-xl font-semibold text-gray-200 mb-4">
+              Clearance Status
+            </h2>
+            <div id="clearance-status"></div>
+          </div>
+
+          <!-- Recent Requests -->
+          <div class="bg-gray-800 p-4 rounded-lg shadow">
+            <h2 class="text-xl font-semibold text-gray-200 mb-4">
+              Recent Requests
+            </h2>
+            <ul id="recent-requests" class="space-y-4"></ul>
+          </div>
+
+          <!-- Notifications -->
+          <div class="bg-gray-800 p-4 rounded-lg shadow">
+            <h2 class="text-xl font-semibold text-gray-200 mb-4">
+              Notifications
+            </h2>
+            <ul id="notifications" class="space-y-4"></ul>
+          </div>
+        </section>
+
+        <!-- Reports and Analytics -->
+        <section>
+          <div class="bg-gray-800 p-4 rounded-lg shadow">
+            <h2 class="text-xl font-semibold text-gray-200 mb-4">
+              Reports and Analytics
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div>
+                <canvas id="clearanceChart"></canvas>
+              </div>
+              <div>
+                <canvas id="departmentChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 shadow mt-6">
+      <div
+        class="max-w-7xl mx-auto px-4 py-4 flex justify-between text-sm text-gray-400"
+      >
+        <span>&copy; 2024 University. All rights reserved.</span>
+        <div class="space-x-4">
+          <a href="#" class="hover:text-gray-200">Help</a>
+          <a href="#" class="hover:text-gray-200">Contact Support</a>
+          <a href="#" class="hover:text-gray-200">Privacy Policy</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Dummy Data for Clearance Status
+      const clearanceStatusData = [
+        { department: "Hostel", status: "Pending", progress: 50 },
+        { department: "Library", status: "Approved", progress: 100 },
+        { department: "Accounts", status: "Pending", progress: 30 },
+      ];
+
+      const clearanceStatusContainer =
+        document.getElementById("clearance-status");
+      clearanceStatusData.forEach((item) => {
+        clearanceStatusContainer.innerHTML += `
+                <div class="mb-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-gray-400">${item.department}</span>
+                        <span class="text-sm ${
+                          item.progress === 100
+                            ? "text-green-400"
+                            : "text-yellow-400"
+                        }">${item.status}</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-2.5">
+                        <div class="h-2.5 rounded-full ${
+                          item.progress === 100
+                            ? "bg-green-400"
+                            : "bg-yellow-400"
+                        }" style="width: ${item.progress}%;"></div>
+                    </div>
+                </div>
+            `;
+      });
+
+      // Dummy Data for Recent Requests
+      const recentRequestsData = [
+        { student: "Student 1", time: "2 hours ago" },
+        { student: "Student 2", time: "5 hours ago" },
+        { student: "Student 3", time: "1 day ago" },
+      ];
+
+      const recentRequestsContainer =
+        document.getElementById("recent-requests");
+      recentRequestsData.forEach((item) => {
+        recentRequestsContainer.innerHTML += `
+                <li class="flex justify-between items-center">
+                    <span class="text-gray-400">${item.student}</span>
+                    <span class="text-sm text-gray-500">${item.time}</span>
+                </li>
+            `;
+      });
+
+      // Dummy Data for Notifications
+      const notificationsData = [
+        "Your clearance request for the Library has been approved.",
+        "Please submit the hostel clearance form.",
+        "Accounts department needs additional information.",
+      ];
+
+      const notificationsContainer = document.getElementById("notifications");
+      notificationsData.forEach((item) => {
+        notificationsContainer.innerHTML += `
+                <li class="text-gray-400">${item}</li>
+            `;
+      });
+
+      // Chart.js - Clearance Progress Chart
+      const clearanceCtx = document
+        .getElementById("clearanceChart")
+        .getContext("2d");
+      const clearanceChart = new Chart(clearanceCtx, {
+        type: "pie",
+        data: {
+          labels: ["Approved", "Pending", "Rejected"],
+          datasets: [
+            {
+              label: "Clearance Progress",
+              data: [60, 30, 10],
+              backgroundColor: [
+                "rgba(27, 156, 133, 0.8)",
+                "rgba(255, 206, 186, 0.8)",
+                "rgba(255, 99, 132, 0.8)",
+              ],
+              borderColor: [
+                "rgba(75, 192, 192, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(255, 99, 132, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "top",
+              labels: {
+                color: "rgba(255, 255, 255, 0.8)",
+              },
+            },
+            title: {
+              display: true,
+              text: "Clearance Progress Overview",
+              color: "rgba(255, 255, 255, 0.8)",
+            },
+          },
+        },
+      });
+
+      // Chart.js - Departmental Clearance Chart
+      const departmentCtx = document
+        .getElementById("departmentChart")
+        .getContext("2d");
+      const departmentChart = new Chart(departmentCtx, {
+        type: "bar",
+        data: {
+          labels: ["Hostel", "Library", "Accounts", "Academic"],
+          datasets: [
+            {
+              label: "Pending Clearances",
+              data: [5, 2, 3, 4],
+              backgroundColor: "rgba(78, 162, 235, 0.7)",
+              borderColor: "rgba(54, 162, 235, 1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false,
+              labels: {
+                color: "rgba(255, 255, 255, 0.8)",
+              },
+            },
+            title: {
+              display: true,
+              text: "Departmental Pending Clearances",
+              color: "rgba(255, 255, 255, 0.8)",
+            },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                color: "rgba(255, 255, 255, 0.8)",
+              },
+              grid: {
+                color: "rgba(255, 255, 255, 0.2)",
+              },
+            },
+            x: {
+              ticks: {
+                color: "rgba(255, 255, 255, 0.8)",
+              },
+              grid: {
+                color: "rgba(255, 255, 255, 0.2)",
+              },
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
